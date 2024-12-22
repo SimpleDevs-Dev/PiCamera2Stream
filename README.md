@@ -4,7 +4,7 @@ Basic script to run PiCamera2 as a streaming device.
 
 ## Resources & Guides
 
-
+* ["Beginner Tutorial: How to Stream Video from Raspberry Pi Camera to Local Computer (P3 - piCamera2)" by Shilleh](https://www.youtube.com/watch?v=NOAY1aaVPAw)
 
 ## Dependencies
 
