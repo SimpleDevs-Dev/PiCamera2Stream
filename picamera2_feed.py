@@ -24,7 +24,8 @@ app = Flask(__name__)
 def generate_frames():
     while True:
             frame = camera.capture_array()
-            ret, buffer = cv2.imencode('.jpg', frame)
+            rotated = cv2.rotate(frame, cv2.ROTATE_180)
+            ret, buffer = cv2.imencode('.jpg', rotated)
             frame = buffer.tobytes()
             yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
