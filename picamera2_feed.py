@@ -11,6 +11,7 @@ parser.add_argument('-x', "--size_x", help="The intended width of the camera out
 parser.add_argument('-y', "--size_y", help="The intended height of the camera output. Default=480", type=int, default=480)
 parser.add_argument('-ae', "--auto_exposure", help="Do we want the camera to perform auto-exposure correction? Default=True", type=bool, default=True)
 parser.add_argument('-awb', "--auto_white_balance", help="Do we want the camera to auto-select the appropriate white balance? Default=True", type=bool, default=True)
+parser.add_argument('-inv', "--invert", help="Do we invert vertically?", type=bool, default=False)
 args = parser.parse_args()
 
 # Set up the camera
@@ -24,8 +25,9 @@ app = Flask(__name__)
 def generate_frames():
     while True:
             frame = camera.capture_array()
-            rotated = cv2.rotate(frame, cv2.ROTATE_180)
-            ret, buffer = cv2.imencode('.jpg', rotated)
+            if args.invert:
+                frame = cv2.rotate(frame, cv2.ROTATE_180)
+            ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
             yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
